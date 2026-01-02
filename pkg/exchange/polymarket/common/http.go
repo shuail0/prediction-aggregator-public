@@ -17,6 +17,9 @@ import (
 	"golang.org/x/net/proxy"
 )
 
+// DefaultUserAgent 默认 User-Agent（用于绕过 Cloudflare 保护）
+const DefaultUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
 // HTTPClientConfig HTTP 客户端配置
 type HTTPClientConfig struct {
 	BaseURL     string
@@ -135,6 +138,7 @@ func (c *HTTPClient) Get(ctx context.Context, path string, params interface{}) (
 		}
 		req.Header.Set("Accept", "application/json")
 		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("User-Agent", DefaultUserAgent)
 
 		resp, err := c.Client.Do(req)
 		if err != nil {
@@ -201,6 +205,7 @@ func (c *HTTPClient) Post(ctx context.Context, path string, data interface{}) ([
 		}
 		req.Header.Set("Accept", "application/json")
 		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("User-Agent", DefaultUserAgent)
 
 		resp, err := c.Client.Do(req)
 		if err != nil {
