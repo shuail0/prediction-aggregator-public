@@ -44,7 +44,7 @@ type Result struct {
 // DefaultConfig 默认配置
 func DefaultConfig() Config {
 	return Config{
-		AccountsFile:   "data/selftrade_accounts_example.csv",
+		AccountsFile:   "data/01_polymarket_hedge_accounts_example.csv",
 		MaxTradeAmount: 10,
 		MinSpreadTicks: 2,
 		MaxRetries:     10,

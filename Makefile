@@ -1,4 +1,4 @@
-.PHONY: help build run test clean install lint
+.PHONY: help build test clean install lint fmt
 
 BIN_DIR := bin
 
@@ -11,42 +11,19 @@ install: ## 安装依赖
 	go mod download
 	go mod tidy
 
-build: ## 编译所有程序
+build: ## 编译所有策略
 	@echo "🔨 Building..."
 	@mkdir -p $(BIN_DIR)
-	go build -o $(BIN_DIR)/aggregator cmd/aggregator/main.go
-	go build -o $(BIN_DIR)/scanner cmd/scanner/main.go
-	go build -o $(BIN_DIR)/maker cmd/maker/main.go
+	go build -o $(BIN_DIR)/01_polymarket_hedge ./strategies/farm/01_polymarket_hedge/
 	@echo "✅ Build complete: $(BIN_DIR)/"
 
-build-aggregator: ## 编译 aggregator
+build-hedge: ## 编译 polymarket 对刷策略
 	@mkdir -p $(BIN_DIR)
-	go build -o $(BIN_DIR)/aggregator cmd/aggregator/main.go
-
-build-scanner: ## 编译 scanner
-	@mkdir -p $(BIN_DIR)
-	go build -o $(BIN_DIR)/scanner cmd/scanner/main.go
-
-build-maker: ## 编译 maker
-	@mkdir -p $(BIN_DIR)
-	go build -o $(BIN_DIR)/maker cmd/maker/main.go
-
-run: ## 运行 aggregator
-	go run cmd/aggregator/main.go
-
-run-scanner: ## 运行 scanner
-	go run cmd/scanner/main.go
-
-run-maker: ## 运行 maker
-	go run cmd/maker/main.go
+	go build -o $(BIN_DIR)/01_polymarket_hedge ./strategies/farm/01_polymarket_hedge/
 
 test: ## 运行测试
 	@echo "🧪 Running tests..."
 	go test -v -race -cover ./...
-
-test-integration: ## 运行集成测试
-	@echo "🧪 Running integration tests..."
-	go test -v -tags=integration ./...
 
 lint: ## 代码检查
 	@echo "🔍 Linting code..."
@@ -60,13 +37,5 @@ clean: ## 清理构建文件
 	@echo "🧹 Cleaning..."
 	rm -rf $(BIN_DIR)/
 	go clean
-
-docker-build: ## 构建 Docker 镜像
-	@echo "🐳 Building Docker image..."
-	docker build -t prediction-aggregator:latest .
-
-docker-run: ## 运行 Docker 容器
-	@echo "🐳 Running Docker container..."
-	docker run --env-file .env prediction-aggregator:latest
 
 .DEFAULT_GOAL := help

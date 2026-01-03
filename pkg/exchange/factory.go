@@ -2,8 +2,24 @@ package exchange
 
 import "fmt"
 
+// ExchangeFactory 交易所工厂函数类型
+type ExchangeFactory func() (Exchange, error)
+
+// 注册的交易所工厂
+var factories = make(map[string]ExchangeFactory)
+
+// Register 注册交易所工厂
+func Register(platform string, factory ExchangeFactory) {
+	factories[platform] = factory
+}
+
 // New 创建交易所实例（工厂模式）
 func New(platform string) (Exchange, error) {
+	// 检查注册的工厂
+	if factory, ok := factories[platform]; ok {
+		return factory()
+	}
+
 	switch platform {
 	case "polymarket":
 		// TODO: 实现 Polymarket 客户端创建
@@ -60,5 +76,5 @@ func (b *baseExchange) SupportedChains() []string                { return []stri
 
 // SupportedPlatforms 返回支持的平台列表
 func SupportedPlatforms() []string {
-	return []string{"polymarket", "kalshi", "manifold"}
+	return []string{"polymarket", "opinion", "kalshi", "manifold"}
 }

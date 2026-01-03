@@ -1,0 +1,11 @@
+{
+  "accountsFile": "data/selftrade_accounts.csv",
+  "marketURLs": [
+    "https://polymarket.com/event/xrp-updown-15m-1767419100?tid=1767418200510",
+    "https://polymarket.com/event/xrp-updown-15m-1767420000?tid=1767418213593"
+  ],
+  "maxTradeAmount": 10,
+  "minSpreadTicks": 2,
+  "maxRetries": 10,
+  "retryDelaySec": 3
+}

@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -84,7 +85,19 @@ func main() {
 }
 
 // loadConfig 从 JSON 文件加载配置
+// 如果是相对路径，优先在可执行文件所在目录查找
 func loadConfig(path string) (*Config, error) {
+	// 如果是相对路径，尝试在可执行文件目录查找
+	if !filepath.IsAbs(path) {
+		if exePath, err := os.Executable(); err == nil {
+			exeDir := filepath.Dir(exePath)
+			absPath := filepath.Join(exeDir, path)
+			if _, err := os.Stat(absPath); err == nil {
+				path = absPath
+			}
+		}
+	}
+
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("读取配置文件失败: %w", err)
