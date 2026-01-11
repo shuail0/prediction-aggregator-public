@@ -15,7 +15,7 @@ func main() {
 	userAddress := os.Getenv("DATA_USER")
 
 	if userAddress == "" {
-		userAddress = "0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296"
+		userAddress = "0x7f69983eb28245bba0d5083502a78744a8f66162"
 		fmt.Println("提示: 未设置 DATA_USER，使用默认测试地址")
 	}
 

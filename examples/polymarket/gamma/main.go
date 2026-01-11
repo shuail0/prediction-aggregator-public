@@ -87,8 +87,7 @@ func main() {
 
 	// 5. 根据 URL 获取市场
 	testURLs := []string{
-		"https://polymarket.com/event/nba-det-bos-2025-11-26",
-		"https://polymarket.com/event/fed-decision-in-december/fed-decreases-interest-rates-by-50-bps-after-december-2025-meeting",
+		"https://polymarket.com/event/btc-updown-15m-1767462300?tid=1767461441245",
 	}
 	marketURL := os.Getenv("MARKET_URL")
 	if marketURL != "" {

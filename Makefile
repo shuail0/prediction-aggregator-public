@@ -1,4 +1,4 @@
-.PHONY: help build test clean install lint fmt
+.PHONY: help build test clean install lint fmt build-hedge build-arbitrage
 
 BIN_DIR := bin
 
@@ -15,11 +15,16 @@ build: ## 编译所有策略
 	@echo "🔨 Building..."
 	@mkdir -p $(BIN_DIR)
 	go build -o $(BIN_DIR)/01_polymarket_hedge ./strategies/farm/01_polymarket_hedge/
+	go build -o $(BIN_DIR)/01_updown_arbitrage ./strategies/trading/01_updown_arbitrage/
 	@echo "✅ Build complete: $(BIN_DIR)/"
 
 build-hedge: ## 编译 polymarket 对刷策略
 	@mkdir -p $(BIN_DIR)
 	go build -o $(BIN_DIR)/01_polymarket_hedge ./strategies/farm/01_polymarket_hedge/
+
+build-arbitrage: ## 编译 Up/Down 套利策略
+	@mkdir -p $(BIN_DIR)
+	go build -o $(BIN_DIR)/01_updown_arbitrage ./strategies/trading/01_updown_arbitrage/
 
 test: ## 运行测试
 	@echo "🧪 Running tests..."

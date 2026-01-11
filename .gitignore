@@ -43,3 +43,4 @@ bin/
 # Data directory (user uploads manually)
 data/*
 !data/*_example.csv
+.private
